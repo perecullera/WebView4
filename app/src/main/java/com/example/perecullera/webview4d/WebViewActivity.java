@@ -22,7 +22,7 @@ public class WebViewActivity extends ActionBarActivity {
 
         String BaseUrl = "http://";
         String fullurl = BaseUrl + server + ":" + port;
-        //
+        // //
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.loadUrl(fullurl);
     }
