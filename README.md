@@ -15,7 +15,7 @@ recull server i port i obre un webview amb http://server:port
 ToDo
 =====
 * controlar errors/excepcions
-* veure com funciona exactament el SharedPreferences
+* controlar el SharedPreferences: esborrar al tancar l'app, guradar preferencies....
 
 Install
 =======
@@ -26,4 +26,4 @@ Install
 1 a opció: Des del botó settings al ActionBar controlar server i port i un listener 
 q automaticament controli els canvis de settings
 
-2a opció: 
+2a opció: q a l'entrar contoli si hi ha cap preferència guardada obri directament allí i sinó q demani server i port i després obrir
