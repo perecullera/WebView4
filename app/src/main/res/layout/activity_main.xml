@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Tria Server i port" />
+
+    <TextView android:id="@+id/servertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:text="Server"/>
+
+    <EditText android:id="@+id/serverinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/servertext"
+        android:layout_toRightOf="@+id/servertext" />
+
+    <TextView android:id="@+id/porttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/servertext"
+        android:layout_marginTop="50px"
+        android:text="Port"/>
+
+    <EditText android:id="@+id/portinput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/porttext"
+        android:layout_toRightOf="@+id/porttext"
+        android:inputType="textPassword" />
+
+    <Button android:id="@+id/submit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/porttext"
+        android:layout_marginTop="60dp"
+        android:text="Submit" />
+
+    <Button android:id="@+id/exit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/porttext"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@+id/submit"
+        android:text="Exit" />
+</RelativeLayout>
