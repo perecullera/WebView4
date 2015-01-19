@@ -6,6 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import java.net.URI;
+
+import static java.lang.String.valueOf;
 
 
 public class WebViewActivity extends ActionBarActivity {
@@ -21,9 +26,12 @@ public class WebViewActivity extends ActionBarActivity {
 
 
         String BaseUrl = "http://";
-        String fullurl = BaseUrl + server + ":" + port;
-        // //
+        String fullurl = BaseUrl + server + port;
+        fullurl = valueOf(URI.create(fullurl));
+
         WebView webView = (WebView) findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient());
+
         webView.loadUrl(fullurl);
     }
 
