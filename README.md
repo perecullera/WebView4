@@ -19,7 +19,9 @@ ToDo
 
 Install
 =======
+dins de app/ hi ha el fitxer app-release.apk. Descarregar i instal.lar.
 
+Recordar permetre instal.lació d'apps de 3ers en el teu android
 
 2a versió (per implementar en un fork nou)
 ==========
