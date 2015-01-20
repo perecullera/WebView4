@@ -2,23 +2,42 @@ package com.example.perecullera.webview4d;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.net.URI;
 
 import static java.lang.String.valueOf;
 
 
-public class WebViewActivity extends ActionBarActivity {
+public class WebViewActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+
+    private DrawerLayout mDrawer;
+    private ListView mDrawerOptions;
+    private static final String[] values = {"Drawer 1", "Drawer 2", "Drawer 3"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+
+        //drawer
+        mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+        mDrawerOptions.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values));
+        mDrawerOptions.setOnItemClickListener(this);
 
         Intent intent = getIntent();
         String server = intent.getExtras().getString("server");
@@ -26,7 +45,7 @@ public class WebViewActivity extends ActionBarActivity {
 
 
         String BaseUrl = "http://";
-        String fullurl = BaseUrl + server + port;
+        String fullurl = BaseUrl + server +":"+ port;
         fullurl = valueOf(URI.create(fullurl));
 
         WebView webView = (WebView) findViewById(R.id.webview);
@@ -55,5 +74,11 @@ public class WebViewActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
+        mDrawer.closeDrawers();
     }
 }
