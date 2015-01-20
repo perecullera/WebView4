@@ -31,8 +31,10 @@ public class WebViewActivity extends ActionBarActivity {
 
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
-
         webView.loadUrl(fullurl);
+
+        // amaga actionBar
+        getSupportActionBar().hide();
     }
 
 
