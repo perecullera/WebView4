@@ -23,7 +23,8 @@ public class WebViewActivity extends ActionBarActivity implements AdapterView.On
 
     private DrawerLayout mDrawer;
     private ListView mDrawerOptions;
-    private static final String[] values = {"Drawer 1", "Drawer 2", "Drawer 3"};
+    private static final String[] values = {"Settings", "Refresh", "Drawer 3"};
+    WebView webView;
 
 
     @Override
@@ -48,7 +49,7 @@ public class WebViewActivity extends ActionBarActivity implements AdapterView.On
         String fullurl = BaseUrl + server +":"+ port;
         fullurl = valueOf(URI.create(fullurl));
 
-        WebView webView = (WebView) findViewById(R.id.webview);
+        webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(fullurl);
 
@@ -79,6 +80,11 @@ public class WebViewActivity extends ActionBarActivity implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
+        if (values[i].equals("Settings")){
+
+        }else if (values[i].equals("Refresh")){
+            webView.loadUrl(webView.getUrl());
+        }
         mDrawer.closeDrawers();
     }
 }
