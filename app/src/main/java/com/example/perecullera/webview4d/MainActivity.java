@@ -71,6 +71,7 @@ public class MainActivity extends ActionBarActivity implements
                 launchBrowser = new Intent(this, WebViewActivity.class);
                 launchBrowser.putExtra("server",server);
                 launchBrowser.putExtra("port", port);
+                //launchBrowser.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 startActivity(launchBrowser);
                 break;
             case R.id.exit:
