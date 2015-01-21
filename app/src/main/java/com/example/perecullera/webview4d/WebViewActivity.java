@@ -81,7 +81,9 @@ public class WebViewActivity extends ActionBarActivity implements AdapterView.On
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
         if (values[i].equals("Settings")){
-
+            Intent settingsInt = new Intent(this, MainActivity.class);
+            settingsInt.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+            startActivity(settingsInt);
         }else if (values[i].equals("Refresh")){
             webView.loadUrl(webView.getUrl());
         }

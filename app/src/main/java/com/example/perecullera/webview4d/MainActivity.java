@@ -2,7 +2,6 @@ package com.example.perecullera.webview4d;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -66,7 +65,7 @@ public class MainActivity extends ActionBarActivity implements
             case R.id.submit:
                 server = serverinput.getText().toString();
                 port = portinput.getText().toString();
-                sharedPrefernces();
+                sharedPreferences();
                 Toast.makeText(this, "Details are saved", 20).show();
                 Intent launchBrowser;
                 launchBrowser = new Intent(this, WebViewActivity.class);
@@ -79,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
 
-    private void sharedPrefernces() {
+    private void sharedPreferences() {
         sh_Pref = getSharedPreferences("Login Credentials", MODE_PRIVATE);
         toEdit = sh_Pref.edit();
         toEdit.putString("Server", server);
