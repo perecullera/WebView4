@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Tria Server i port" />
+        android:text="Tria Server i port"
+        android:id="@+id/textView3" />
 
     <TextView android:id="@+id/servertext"
         android:layout_width="wrap_content"
@@ -38,19 +39,18 @@
         android:layout_toRightOf="@+id/porttext"
         android:inputType="textPassword" />
 
-    <Button android:id="@+id/submit"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/porttext"
-        android:layout_marginTop="60dp"
-        android:text="Submit" />
-
     <Button android:id="@+id/exit"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/porttext"
-        android:layout_marginLeft="110dp"
         android:layout_marginTop="60dp"
-        android:layout_toRightOf="@+id/submit"
         android:text="Exit" />
+
+    <Button android:id="@+id/submit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_alignTop="@+id/exit"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
 </RelativeLayout>
