@@ -22,6 +22,7 @@ public class SettingsActivity extends ActionBarActivity implements
     EditText serverinput, portinput;
     SharedPreferences sh_Pref;
     SharedPreferences.Editor toEdit;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
 
     @Override
@@ -30,7 +31,7 @@ public class SettingsActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_main);
         getInit();
 
-        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 // Implementation
                 System.out.println(key);

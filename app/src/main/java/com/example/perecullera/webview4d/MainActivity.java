@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private static final String[] values = {"Settings", "Refresh", "Drawer 3"};
     WebView webView;
     SharedPreferences sPref;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
 
     @Override
@@ -46,7 +47,27 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         mDrawerOptions.setOnItemClickListener(this);
 
 
+        carregaWeb();
+        
 
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                carregaWeb();
+            }
+        };
+        sPref.registerOnSharedPreferenceChangeListener(listener);
+        // amaga actionBar
+        getSupportActionBar().hide();
+
+        //debug
+        Map<String,?> keys = sPref.getAll();
+
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.d("map values", entry.getKey() + ": " +
+                    entry.getValue().toString());
+        }
+    }
+    public void carregaWeb(){
         //Intent intent = getIntent();
         sPref = PreferenceManager.getDefaultSharedPreferences(this);
         String server = sPref.getString("Server", "DEFAULT");
@@ -67,35 +88,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(fullurl);
-
-        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                // Implementation
-                String server = prefs.getString("Server", "DEFAULT");
-                String port = prefs.getString("Port", "DEFAULT");
-
-
-                String BaseUrl = "http://";
-                String fullurl = BaseUrl + server +":"+ port;
-                fullurl = valueOf(URI.create(fullurl));
-                webView.loadUrl(fullurl);
-                Toast.makeText(getApplicationContext(), "listener main " + sPref.toString(), Toast.LENGTH_SHORT).show();
-                System.out.println("url " + fullurl);
-            }
-        };
-        sPref.registerOnSharedPreferenceChangeListener(listener);
-        // amaga actionBar
-        getSupportActionBar().hide();
-
-        //debug
-        Map<String,?> keys = sPref.getAll();
-
-        for(Map.Entry<String,?> entry : keys.entrySet()){
-            Log.d("map values", entry.getKey() + ": " +
-                    entry.getValue().toString());
-        }
+        Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
