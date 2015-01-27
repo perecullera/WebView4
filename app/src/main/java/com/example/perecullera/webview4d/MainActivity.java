@@ -103,10 +103,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         port = sPref.getString("port", "");
 
     }
+
     //carrega un html d'error guardat a els arxius de l'app
     private void carregaHtml() {
         //TODO
+        webView.loadUrl("file:///android_asset/error.html");
+
     }
+
     //comprova que el server i port, en cas q n'hi hagi, siguin una URL valida
     // en cas q sigui vàlida la carrega a la variable fullUrl
     public boolean validUrl() {
