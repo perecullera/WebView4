@@ -27,16 +27,23 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private DrawerLayout mDrawer;
     private ListView mDrawerOptions;
-    private static final String[] values = {"Settings", "Refresh", "Drawer 3"};
+    private static final String[] values = {"Settings", "Refresh", "Exit"};
     WebView webView;
     SharedPreferences sPref;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    String server;
+    String port;
+    String BaseUrl = "http://";
+    String fullurl ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+
+        //webview
+        webView = (WebView) findViewById(R.id.webview);
 
         //drawer
         mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
@@ -46,16 +53,31 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         mDrawerOptions.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values));
         mDrawerOptions.setOnItemClickListener(this);
 
+        //carreguem preferencies
+        loadSerPort();
+        sPref = PreferenceManager.getDefaultSharedPreferences(this);
+        server = sPref.getString("server", "");
+        port = sPref.getString("port", "");
 
-        carregaWeb();
-        
+        //és una URL valida?
+        if (validUrl()){
+            //carreguem web
+            carregaWeb();
+        }else{
+            //carreguem alert i html error
+            //TODO
+            carregaHtml();
+        }
 
+        //instanciem listener dels canvis a les preferències
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                validUrl();
                 carregaWeb();
             }
         };
         sPref.registerOnSharedPreferenceChangeListener(listener);
+
         // amaga actionBar
         getSupportActionBar().hide();
 
@@ -67,11 +89,26 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                     entry.getValue().toString());
         }
     }
+
+    private void loadSerPort() {
+        //TODO
+    }
+
+    private void carregaHtml() {
+        //TODO
+    }
+
+    public boolean validUrl() {
+        //cas server i port estiguin buits
+        if (port.equals("")&&server.equals("")){
+            //TODO
+        }
+        return true;
+    }
+
     public void carregaWeb(){
         //Intent intent = getIntent();
-        sPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String server = sPref.getString("server", "");
-        String port = sPref.getString("port", "");
+
 
         //debug
         System.out.println("preferencias "+ sPref.toString());
@@ -81,13 +118,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
 
-        String BaseUrl = "http://";
-        String fullurl = BaseUrl + server;
+
+
         //nou mètode valida() ping
         //comprova conexió
         fullurl = valueOf(Uri.parse(fullurl));
 
-        webView = (WebView) findViewById(R.id.webview);
+
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(fullurl);
