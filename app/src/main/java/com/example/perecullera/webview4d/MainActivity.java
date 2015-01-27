@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,10 +55,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         mDrawerOptions.setOnItemClickListener(this);
 
         //carreguem preferencies
-        loadSerPort();
         sPref = PreferenceManager.getDefaultSharedPreferences(this);
-        server = sPref.getString("server", "");
-        port = sPref.getString("port", "");
+        loadSerPort();
+
 
         //és una URL valida?
         if (validUrl()){
@@ -72,8 +72,16 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         //instanciem listener dels canvis a les preferències
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                validUrl();
-                carregaWeb();
+                loadSerPort();
+                //és una URL valida?
+                if (validUrl()){
+                    //carreguem web
+                    carregaWeb();
+                }else{
+                    //carreguem alert i html error
+                    //TODO
+                    carregaHtml();
+                }
             }
         };
         sPref.registerOnSharedPreferenceChangeListener(listener);
@@ -83,27 +91,50 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         //debug
         Map<String,?> keys = sPref.getAll();
-
         for(Map.Entry<String,?> entry : keys.entrySet()){
             Log.d("map values", entry.getKey() + ": " +
                     entry.getValue().toString());
         }
     }
-
+    //carrega preferències a les variables de la classe, si no en troba posa "" com a default
     private void loadSerPort() {
         //TODO
-    }
+        server = sPref.getString("server", "");
+        port = sPref.getString("port", "");
 
+    }
+    //carrega un html d'error guardat a els arxius de l'app
     private void carregaHtml() {
         //TODO
     }
-
+    //comprova que el server i port, en cas q n'hi hagi, siguin una URL valida
+    // en cas q sigui vàlida la carrega a la variable fullUrl
     public boolean validUrl() {
+        String url;
+        //TODO
         //cas server i port estiguin buits
-        if (port.equals("")&&server.equals("")){
-            //TODO
+        if (port.equals("")&& server.equals("")){
+            return false;
+        //cas no s'ha introduit port
+        }else if (port.equals("")){
+            url = BaseUrl + server;
+            if (Patterns.WEB_URL.matcher(url).matches()){
+                fullurl = url;
+                return true;
+            }else{
+                return false;
+            }
+        //cas en q s'ha introduit port
+        }else if (!port.equals("")&&!server.equals("")) {
+            url = BaseUrl + server + ":" + port;
+            if (Patterns.WEB_URL.matcher(url).matches()){
+                fullurl = url;
+                return true;
+            }else{
+                return false;
+            }
         }
-        return true;
+        return false;
     }
 
     public void carregaWeb(){
@@ -161,6 +192,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             startActivity(settingsInt);
         }else if (values[i].equals("Refresh")){
             webView.loadUrl(webView.getUrl());
+        }else if (values[i].equals("Exit")){
+
         }
         mDrawer.closeDrawers();
     }
