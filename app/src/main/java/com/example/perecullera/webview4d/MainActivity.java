@@ -2,6 +2,7 @@ package com.example.perecullera.webview4d;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.net.URI;
 import java.util.Map;
 
 import static java.lang.String.valueOf;
@@ -70,8 +70,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     public void carregaWeb(){
         //Intent intent = getIntent();
         sPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String server = sPref.getString("Server", "DEFAULT");
-        String port = sPref.getString("Port", "DEFAULT");
+        String server = sPref.getString("server", "");
+        String port = sPref.getString("port", "");
 
         //debug
         System.out.println("preferencias "+ sPref.toString());
@@ -82,14 +82,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
         String BaseUrl = "http://";
-        String fullurl = BaseUrl + server +":"+ port;
-        fullurl = valueOf(URI.create(fullurl));
+        String fullurl = BaseUrl + server;
+        //nou mètode valida() ping
+        //comprova conexió
+        fullurl = valueOf(Uri.parse(fullurl));
 
         webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(fullurl);
         Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

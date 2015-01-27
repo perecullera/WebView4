@@ -1,21 +1,15 @@
 package com.example.perecullera.webview4d;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class SettingsActivity extends ActionBarActivity implements
-        OnClickListener {
+public class SettingsActivity extends PreferenceActivity {
 
     Button submit, exit;
     String server, port;
@@ -28,13 +22,14 @@ public class SettingsActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        addPreferencesFromResource(R.xml.pref_general);
         getInit();
 
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
                 // Implementation
                 System.out.println(key);
+                //sharedPreferences();
                 Toast.makeText(getApplicationContext(), "listener settings"+ prefs.toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -45,15 +40,15 @@ public class SettingsActivity extends ActionBarActivity implements
     }
     public void getInit() {
 
-        submit = (Button) findViewById(R.id.submit);
+        /*submit = (Button) findViewById(R.id.submit);
         exit = (Button) findViewById(R.id.exit);
         serverinput = (EditText) findViewById(R.id.serverinput);
         portinput = (EditText) findViewById(R.id.portinput);
         submit.setOnClickListener(this);
-        exit.setOnClickListener(this); }
+        exit.setOnClickListener(this); }*/
 
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -89,14 +84,14 @@ public class SettingsActivity extends ActionBarActivity implements
                 break;
             case R.id.exit:
                 finish();
-        }
+        }*/
     }
 
     private void sharedPreferences() {
 
         toEdit = sh_Pref.edit();
-        toEdit.putString("Server", server);
-        toEdit.putString("Port", port);
+        toEdit.putString("server", server);
+        toEdit.putString("port", port);
         toEdit.commit();
     }
 

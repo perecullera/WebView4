@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:title="@string/pref_server_label"
+        android:key="@string/pref_server_key"
+        android:defaultValue="@string/pref_server_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <EditTextPreference
+        android:title="@string/pref_port_label"
+        android:key="@string/pref_port_key"
+        android:defaultValue="@string/pref_port_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <ListPreference
+        android:title="Servers"
+        android:key="servers"
+        android:defaultValue="Server1"
+        android:entryValues="@array/pref_servers_values"
+        android:entries="@array/pref_servers_options" />
+
+</PreferenceScreen>
