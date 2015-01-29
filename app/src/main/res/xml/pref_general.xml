@@ -15,6 +15,10 @@
         android:inputType="text"
         android:singleLine="true" />
 
+    <com.example.perecullera.webview4d.ServerPortDialog
+        android:summary="Elegir Servidor i Port"
+        android:title="Server i Port" />
+
     <ListPreference
         android:title="Servers"
         android:key="servers"
