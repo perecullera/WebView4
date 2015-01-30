@@ -6,11 +6,27 @@
     <EditText
         android:id="@+id/ser_dialog"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:title="@string/pref_server_label"
+        android:key="@string/pref_server_key"
+        android:defaultValue="@string/pref_server_default"
+        android:inputType="text"
+        android:singleLine="true"
+        android:hint="Server"
+        android:padding="25dp"
+        />
 
     <EditText
         android:id="@+id/port_dialog"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:title="@string/pref_port_label"
+        android:key="@string/pref_port_key"
+        android:defaultValue="@string/pref_port_default"
+        android:inputType="text"
+        android:singleLine="true"
+        android:hint="Port"
+        android:padding="25dp"
+        />
 
 </LinearLayout>
