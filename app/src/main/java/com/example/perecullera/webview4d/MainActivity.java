@@ -13,12 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static java.lang.String.valueOf;
 
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         //webview
         webView = (WebView) findViewById(R.id.webview);
-        webView.setWebViewClient(new NewWebViewClient());
+        webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
 
         //drawer
@@ -148,16 +149,42 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         System.out.println("preferencias "+ sPref.toString());
         System.out.println("server "+ server);
         System.out.println("port "+ port);
-        Toast.makeText(this, "preferencias" + sPref.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "preferencias" + sPref.toString(), Toast.LENGTH_SHORT).show();
 
         fullurl = valueOf(Uri.parse(fullurl));
 
+        if (getResponse(fullurl)){
+            webView.loadUrl(fullurl);
+            //Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
+        } else {
+            carregaHtml();
+        }
 
 
-        webView.loadUrl(fullurl);
-        Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
+
     }
-
+    public boolean getResponse (String url){
+        boolean response;
+        GetResponse getResponse = new GetResponse();
+        try {
+            response = getResponse.execute(url).get();
+            Log.i("response : " , String.valueOf(response));
+            if (response){
+                Log.i("returning true  : " + response , url);
+                return true;
+            }else if (!response){
+                Log.i("returning false  : "+ response , url);
+                return false;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            //TODO
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            //TODO
+        }
+        return false;
+    }
 
 
     @Override
@@ -181,7 +208,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
         if (values[i].equals("Settings")){
             Intent settingsInt = new Intent(this, SettingsActivity.class);
             settingsInt.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);

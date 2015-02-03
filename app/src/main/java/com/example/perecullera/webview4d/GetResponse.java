@@ -2,7 +2,6 @@ package com.example.perecullera.webview4d;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.webkit.WebView;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,7 +18,6 @@ public class GetResponse extends AsyncTask<String, Void, Boolean> {
         // in this case, the Content-Length one
         URL url;
         HttpURLConnection conexion;
-        WebView view;
         boolean bo;
 
         try {
