@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -29,7 +28,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private DrawerLayout mDrawer;
     private ListView mDrawerOptions;
     private static final String[] values = {"Settings", "Refresh", "Exit"};
-    WebView webView;
+    static WebView webView;
     SharedPreferences sPref;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
     String server;
@@ -45,12 +44,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         //webview
         webView = (WebView) findViewById(R.id.webview);
+        webView.setWebViewClient(new NewWebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
 
         //drawer
         mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-
         mDrawerOptions.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values));
         mDrawerOptions.setOnItemClickListener(this);
 
@@ -151,17 +150,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         System.out.println("port "+ port);
         Toast.makeText(this, "preferencias" + sPref.toString(), Toast.LENGTH_SHORT).show();
 
-
-
-
-
-        //nou mètode valida() ping
-        //comprova conexió
         fullurl = valueOf(Uri.parse(fullurl));
 
 
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
+
         webView.loadUrl(fullurl);
         Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
     }
