@@ -1,6 +1,5 @@
 package com.example.perecullera.webview4d;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +14,6 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -32,32 +30,57 @@ import static java.lang.String.valueOf;
 
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
+    //views
     private DrawerLayout mDrawer;
     private ListView mDrawerOptions;
-    private static final String[] values = {"Settings", "Refresh", "Exit"};
     static WebView webView;
+
+    //drawer labels
+    String settings ;
+    String refresh ;
+    String exit ;
+    private String[] values;
+
+    //Sharedprefrences and listener
     SharedPreferences sPref;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
     String server;
     String port;
+
+    //urls
     String BaseUrl = "http://";
     String fullurl ;
-    final Activity activity = this;
 
     //progressdialog
     ProgressDialog pd;
+    //progressdialog text
+    String pdmessage ;
 
+    //HTML messages
+    String invalidUrl ;
+    String messServer1;
+    String messServer2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Let's display the progress in the activity title bar, like the
-        // browser app does.
-        getWindow().requestFeature(Window.FEATURE_PROGRESS);
+        //instantiate variables
+        settings = getString(R.string.drawer_settings);
+        refresh = getString(R.string.drawer_refresh);
+        exit =getString(R.string.drawer_exit);
+        values = new String[]{settings, refresh, exit};
 
-        pd =  ProgressDialog.show(this, "", "Please wait, connecting to server ...", true);
+        pdmessage = getString(R.string.progreesdiag_mess);
+
+        invalidUrl = getString(R.string.messages_invalid);
+        messServer1 = getString(R.string.message_server1);
+        messServer2 = getString(R.string.message_server2);
+
+
+
+        pd =  ProgressDialog.show(this, "", pdmessage, true);
 
         setContentView(R.layout.activity_web_view);
 
@@ -80,7 +103,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
                 // The progress meter will automatically disappear when we reach 100%
-
                 pd.setProgress(progress * 1000);
                 }
         });
@@ -104,7 +126,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }else{
             //carreguem alert i html error
             //TODO
-            carregaHtml("invalid URL");
+            carregaHtml(invalidUrl);
         }
 
         //instanciem listener dels canvis a les preferències
@@ -117,7 +139,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 }else{
                     //carreguem alert i html error
                     //TODO
-                    carregaHtml("Invalid URL");
+                    carregaHtml(invalidUrl);
                 }
             }
         };
@@ -210,7 +232,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 return true;
             }if (response == 0){
                 // no hi ha conexió amb el server
-                carregaHtml("unnable to connect to server 1");
+                carregaHtml(messServer1);
                 return false;
             }
             else {
@@ -225,7 +247,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             e.printStackTrace();
             carregaHtml(String.valueOf(e));
         }
-        carregaHtml(" unnable to connect to server 2 ");
+        carregaHtml(messServer2);
         return false;
     }
 
@@ -276,13 +298,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Toast.makeText(this, "Pulsado " + values[i], Toast.LENGTH_SHORT).show();
-        if (values[i].equals("Settings")){
+        if (values[i].equals(settings)){
             Intent settingsInt = new Intent(this, SettingsActivity.class);
             settingsInt.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
             startActivity(settingsInt);
-        }else if (values[i].equals("Refresh")){
+        }else if (values[i].equals(refresh)){
             webView.loadUrl(webView.getUrl());
-        }else if (values[i].equals("Exit")){
+        }else if (values[i].equals(exit)){
             //TODO
         }
         mDrawer.closeDrawers();

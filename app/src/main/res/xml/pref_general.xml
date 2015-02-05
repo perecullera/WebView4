@@ -16,13 +16,13 @@
         android:singleLine="true" />
 
     <com.example.perecullera.webview4d.ServerPortDialog
-        android:summary="Elegir Servidor i Port"
-        android:title="Server i Port" />
+        android:summary="@string/pref_portserver_summ"
+        android:title="@string/pref_portserver_title" />
 
     <ListPreference
-        android:title="Servers"
-        android:key="servers"
-        android:defaultValue="Server1"
+        android:title="@string/pref_servers_title"
+        android:key="@string/pref_servers_key"
+        android:defaultValue="@string/pref_servers_default"
         android:entryValues="@array/pref_servers_values"
         android:entries="@array/pref_servers_options" />
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WebView4d</string>
+
+    <!--Settings activity title -->
+    <string name="action_settings">Preferències</string>
+
+    <!--MainActivity title NOT USED -->
+    <string name="title_activity_web_view">WebViewActivity</string>
+
+    <!--Preferences labels and keys international -->
+    <string name="pref_server_default">localhost</string>
+    <string name="pref_server_label">Servidor</string>
+    <string name="pref_port_default"></string>
+    <string name="pref_port_label">Port</string>
+    <string name="pref_portserver_summ">Selecciona Servidor i Port</string>
+    <string name="pref_portserver_title">Servidor i Port</string>
+    <string name="pref_servers_title">Servidors</string>
+    <string name="pref_servers_default">Servidor 1</string>
+
+    <!--Preferences labels and keys UNMUTABLE -->
+    <string name="pref_server_key">server</string>
+    <string name="pref_port_key">port</string>
+    <string name="pref_servers_key">servers</string>
+
+    <!-- Drawer Options-->
+    <string name="drawer_settings">Preferències</string>
+    <string name="drawer_refresh">Refresca</string>
+    <string name="drawer_exit">Sortir</string>
+
+    <!-- ProgressDialog -->
+    <string name="progreesdiag_mess">Per favor espera, intentant conectar amb el servidor...</string>
+
+    <!-- HTML messages -->
+    <string name="messages_invalid">URL invàlida</string>
+    <string name="message_server1">No és possible conectar amb el servidor còdig 1</string>
+    <string name="message_server2">No és possible conectar amb el servidor còdig 2</string>
+
+
+
+</resources>
