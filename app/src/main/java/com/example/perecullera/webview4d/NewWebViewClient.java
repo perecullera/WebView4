@@ -1,14 +1,11 @@
 package com.example.perecullera.webview4d;
 
-import android.util.Log;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by perecullera on 3/2/15.
@@ -48,28 +45,28 @@ public class NewWebViewClient extends WebViewClient {
 
     }*/
 
-    @Override
-    public void onLoadResource (WebView view, String urlConnection){
-        boolean response;
-        GetResponse getResponse = new GetResponse();
-        try {
-            response = getResponse.execute(urlConnection).get();
-            Log.i("response : " , String.valueOf(response));
-            if (response){
-                Log.i("open webview  : " , urlConnection);
-                super.onLoadResource(view, urlConnection);
-            }else if (!response){
-                Log.i("open default : " , file);
-                view.loadUrl(file);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            //TODO
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            //TODO
-        }
-    }
+//    @Override
+//    public void onLoadResource (WebView view, String urlConnection){
+//        boolean response;
+//        GetResponse getResponse = new GetResponse(this);
+//        try {
+//            response = getResponse.execute(urlConnection).get();
+//            Log.i("response : " , String.valueOf(response));
+//            if (response){
+//                Log.i("open webview  : " , urlConnection);
+//                super.onLoadResource(view, urlConnection);
+//            }else if (!response){
+//                Log.i("open default : " , file);
+//                view.loadUrl(file);
+//            }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            //TODO
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//            //TODO
+//        }
+//    }
 
     public String convertToString(InputStream inputStream){
         StringBuffer string = new StringBuffer();

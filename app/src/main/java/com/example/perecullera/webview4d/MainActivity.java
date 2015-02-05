@@ -1,7 +1,10 @@
 package com.example.perecullera.webview4d;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,12 +15,15 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.net.HttpURLConnection;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -36,16 +42,48 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     String port;
     String BaseUrl = "http://";
     String fullurl ;
+    final Activity activity = this;
+
+    //progressdialog
+    ProgressDialog pd;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Let's display the progress in the activity title bar, like the
+        // browser app does.
+        getWindow().requestFeature(Window.FEATURE_PROGRESS);
+
+        pd =  ProgressDialog.show(this, "", "Please wait, connecting to server ...", true);
+
         setContentView(R.layout.activity_web_view);
 
         //webview
         webView = (WebView) findViewById(R.id.webview);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon){
+                pd.show();
+            }
+            @Override
+            public void onPageFinished (WebView view, String url){
+                if (pd.isShowing()) {
+                    pd.dismiss();
+                }
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient(){
+                @Override
+                public void onProgressChanged(WebView view, int progress) {
+                // Activities and WebViews measure progress with different scales.
+                // The progress meter will automatically disappear when we reach 100%
+
+                pd.setProgress(progress * 1000);
+                }
+        });
         webView.getSettings().setJavaScriptEnabled(true);
 
         //drawer
@@ -66,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }else{
             //carreguem alert i html error
             //TODO
-            carregaHtml();
+            carregaHtml("invalid URL");
         }
 
         //instanciem listener dels canvis a les preferències
@@ -75,12 +113,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 loadSerPort();
                 //és una URL valida?
                 if (validUrl()){
-                    //carreguem web
                     carregaWeb();
                 }else{
                     //carreguem alert i html error
                     //TODO
-                    carregaHtml();
+                    carregaHtml("Invalid URL");
                 }
             }
         };
@@ -105,9 +142,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     //carrega un html d'error guardat a els arxius de l'app
-    private void carregaHtml() {
+    private void carregaHtml(String message) {
         //TODO
-        webView.loadUrl("file:///android_asset/error.html");
+        String summary = "<html><body><b>ERROR</b> ";
+        String tale = "</body></html>";
+        webView.loadData(summary + message + tale, "text/html", null);
+        if (pd.isShowing()) {
+            pd.dismiss();
+        }
 
     }
 
@@ -142,8 +184,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     public void carregaWeb(){
-        //Intent intent = getIntent();
-
 
         //debug
         System.out.println("preferencias "+ sPref.toString());
@@ -156,36 +196,63 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         if (getResponse(fullurl)){
             webView.loadUrl(fullurl);
             //Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
-        } else {
-            carregaHtml();
         }
-
-
-
     }
+
     public boolean getResponse (String url){
-        boolean response;
-        GetResponse getResponse = new GetResponse();
+        int response;
+        GetResponse getResponse = new GetResponse(this);
         try {
             response = getResponse.execute(url).get();
             Log.i("response : " , String.valueOf(response));
-            if (response){
+            if (response == HttpURLConnection.HTTP_OK){
                 Log.i("returning true  : " + response , url);
                 return true;
-            }else if (!response){
+            }if (response == 0){
+                // no hi ha conexió amb el server
+                carregaHtml("unnable to connect to server 1");
+                return false;
+            }
+            else {
                 Log.i("returning false  : "+ response , url);
+                carregaHtml(String.valueOf(response));
                 return false;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-            //TODO
+            carregaHtml(String.valueOf(e));
         } catch (ExecutionException e) {
             e.printStackTrace();
-            //TODO
+            carregaHtml(String.valueOf(e));
         }
+        carregaHtml(" unnable to connect to server 2 ");
         return false;
     }
 
+   /* @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DIALOG_DOWNLOAD_PROGRESS:
+                mProgressDialog = new ProgressDialog(this);
+                mProgressDialog.setMessage("waiting 5 minutes..");
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+                return mProgressDialog;
+            default:
+                return null;
+        }
+    }*/
+
+//    @Override
+//    public void onPause(){
+//
+//    }
+
+//    @Override
+//    public void onResume(){
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -216,7 +283,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }else if (values[i].equals("Refresh")){
             webView.loadUrl(webView.getUrl());
         }else if (values[i].equals("Exit")){
-
+            //TODO
         }
         mDrawer.closeDrawers();
     }

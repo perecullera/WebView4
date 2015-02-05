@@ -6,7 +6,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
 public class SettingsActivity extends PreferenceActivity {
@@ -26,11 +25,12 @@ public class SettingsActivity extends PreferenceActivity {
         //getInit();
 
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {/*
                 // Implementation
                 System.out.println(key);
                 //sharedPreferences();
-                Toast.makeText(getApplicationContext(), "listener settings"+ prefs.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "listener settings"+ prefs.toString(), Toast.LENGTH_SHORT).show();*/
+                finish();
 
             }
         };
