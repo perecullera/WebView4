@@ -61,6 +61,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     String messServer1;
     String messServer2;
 
+    NetworkUtil nt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,16 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
         pd =  ProgressDialog.show(this, "", pdmessage, true);
+        pd.setCancelable(true);
 
+        //carrega layout
         setContentView(R.layout.activity_web_view);
+
+        // amaga actionBar
+        getSupportActionBar().hide();
+
+        nt = new NetworkUtil();
+
 
         //webview
         webView = (WebView) findViewById(R.id.webview);
@@ -126,27 +135,26 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }else{
             //carreguem alert i html error
             //TODO
-            carregaHtml(invalidUrl);
+            goToPref(invalidUrl);
         }
 
         //instanciem listener dels canvis a les preferències
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                loadSerPort();
+               loadSerPort();
                 //és una URL valida?
                 if (validUrl()){
                     carregaWeb();
                 }else{
                     //carreguem alert i html error
                     //TODO
-                    carregaHtml(invalidUrl);
+                    goToPref(invalidUrl);
                 }
             }
         };
         sPref.registerOnSharedPreferenceChangeListener(listener);
 
-        // amaga actionBar
-        getSupportActionBar().hide();
+
 
         //debug
         Map<String,?> keys = sPref.getAll();
@@ -156,7 +164,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     }
     //carrega preferències a les variables de la classe, si no en troba posa "" com a default
-    private void loadSerPort() {
+    public void loadSerPort() {
         //TODO
         server = sPref.getString("server", "");
         port = sPref.getString("port", "");
@@ -164,20 +172,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     //carrega un html d'error guardat a els arxius de l'app
-    private void carregaHtml(String message) {
+     public void goToPref( String message) {
         //TODO
-        String summary = "<html><body><b>ERROR</b> ";
-        String tale = "</body></html>";
-        webView.loadData(summary + message + tale, "text/html", null);
-        if (pd.isShowing()) {
-            pd.dismiss();
-        }
+
+        Intent settingsInt = new Intent(this , SettingsActivity.class);
+        settingsInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+         settingsInt.putExtra("message", message);
+        startActivity(settingsInt);
 
     }
 
     //comprova que el server i port, en cas q n'hi hagi, siguin una URL valida
     // en cas q sigui vàlida la carrega a la variable fullUrl
-    public boolean validUrl() {
+    public  boolean validUrl() {
         String url;
         //TODO
         //cas server i port estiguin buits
@@ -214,10 +221,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         //Toast.makeText(this, "preferencias" + sPref.toString(), Toast.LENGTH_SHORT).show();
 
         fullurl = valueOf(Uri.parse(fullurl));
-
-        if (getResponse(fullurl)){
-            webView.loadUrl(fullurl);
-            //Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
+        if (checkConnectivity()!= 0) {
+            if (getResponse(fullurl)) {
+                webView.loadUrl(fullurl);
+                //Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            nt.showNoConnectionDialog(this);
         }
     }
 
@@ -232,50 +242,28 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 return true;
             }if (response == 0){
                 // no hi ha conexió amb el server
-                carregaHtml(messServer1);
+                goToPref(messServer1);
                 return false;
             }
             else {
                 Log.i("returning false  : "+ response , url);
-                carregaHtml(String.valueOf(response));
+                goToPref(String.valueOf(response));
                 return false;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-            carregaHtml(String.valueOf(e));
+            goToPref(String.valueOf(e));
         } catch (ExecutionException e) {
             e.printStackTrace();
-            carregaHtml(String.valueOf(e));
+            goToPref(String.valueOf(e));
         }
-        carregaHtml(messServer2);
+        goToPref(messServer2);
         return false;
     }
 
-   /* @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_DOWNLOAD_PROGRESS:
-                mProgressDialog = new ProgressDialog(this);
-                mProgressDialog.setMessage("waiting 5 minutes..");
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                return mProgressDialog;
-            default:
-                return null;
-        }
-    }*/
-
-//    @Override
-//    public void onPause(){
-//
-//    }
-
-//    @Override
-//    public void onResume(){
-//
-//    }
-
+    public int checkConnectivity(){
+        return nt.getConnectivityStatus(this);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

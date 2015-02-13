@@ -17,7 +17,8 @@
 
     <com.example.perecullera.webview4d.ServerPortDialog
         android:summary="@string/pref_portserver_summ"
-        android:title="@string/pref_portserver_title" />
+        android:title="@string/pref_portserver_title"
+        />
 
     <ListPreference
         android:title="@string/pref_servers_title"

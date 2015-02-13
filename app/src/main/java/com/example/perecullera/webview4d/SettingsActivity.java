@@ -1,5 +1,6 @@
 package com.example.perecullera.webview4d;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -16,6 +17,7 @@ public class SettingsActivity extends PreferenceActivity {
     SharedPreferences sh_Pref;
     SharedPreferences.Editor toEdit;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    MainActivity ma = new MainActivity();
 
 
     @Override
@@ -36,7 +38,13 @@ public class SettingsActivity extends PreferenceActivity {
         };
         sh_Pref = PreferenceManager.getDefaultSharedPreferences(this);
         sh_Pref.registerOnSharedPreferenceChangeListener(listener);
-
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("message");
+        if (message != null) {
+            System.out.println(message);
+            CustomDialogClass cdd = new CustomDialogClass(this, message);
+            cdd.show();
+        }
     }
 
     private void sharedPreferences() {
