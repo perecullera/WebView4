@@ -26,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       <!-- <receiver android:name="com.example.perecullera.webview4d.NetworkChangeReceiver" android:label="NetworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE">
+                    <action android:name="android.net.wifi.WIFI_STATE_CHANGED">
+                    </action></action></intent-filter>
+        </receiver>-->
 
     </application>
 

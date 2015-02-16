@@ -2,8 +2,10 @@ package com.example.perecullera.webview4d;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.net.HttpURLConnection;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static java.lang.String.valueOf;
@@ -62,6 +63,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     String messServer2;
 
     NetworkUtil nt;
+    private final NetworkChangeReceiver mybroadcast = new NetworkChangeReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,14 +156,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         };
         sPref.registerOnSharedPreferenceChangeListener(listener);
 
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("ConnectivityManager.CONNECTIVITY_ACTION");
+//        registerReceiver(mybroadcast, filter);
+        registerReceiver(
+                mybroadcast,
+                new IntentFilter(
+                        ConnectivityManager.CONNECTIVITY_ACTION));
 
-
-        //debug
-        Map<String,?> keys = sPref.getAll();
-        for(Map.Entry<String,?> entry : keys.entrySet()){
-            Log.d("map values", entry.getKey() + ": " +
-                    entry.getValue().toString());
-        }
     }
     //carrega preferències a les variables de la classe, si no en troba posa "" com a default
     public void loadSerPort() {
@@ -177,7 +179,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         Intent settingsInt = new Intent(this , SettingsActivity.class);
         settingsInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-         settingsInt.putExtra("message", message);
+        settingsInt.putExtra("message", message);
         startActivity(settingsInt);
 
     }
@@ -227,7 +229,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 //Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
             }
         } else {
-            nt.showNoConnectionDialog(this);
+            nt.showNoConnectionDialog(this  );
         }
     }
 
@@ -291,10 +293,23 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             settingsInt.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
             startActivity(settingsInt);
         }else if (values[i].equals(refresh)){
-            webView.loadUrl(webView.getUrl());
+            carregaWeb();
         }else if (values[i].equals(exit)){
             //TODO
         }
         mDrawer.closeDrawers();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        unregisterReceiver(mybroadcast);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("ConnectivityManager.CONNECTIVITY_ACTION");
+        registerReceiver(mybroadcast, filter);
     }
 }

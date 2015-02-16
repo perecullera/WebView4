@@ -59,7 +59,7 @@ public class GetResponse extends AsyncTask<String, Integer, Integer> {
 
             url = new URL(strings[0]);
             conexion = (HttpURLConnection) url.openConnection();
-            conexion.setConnectTimeout(3000);
+            conexion.setConnectTimeout(10000);
             Log.i("connection", "opened");
             //conexion.connect();
             conexion.setRequestMethod("HEAD");
