@@ -52,7 +52,7 @@ public class NetworkUtil {
         builder.setTitle(R.string.no_connection_title);
         builder.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                ctx.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                ctx.startActivity(new Intent(Settings.ACTION_SETTINGS));
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

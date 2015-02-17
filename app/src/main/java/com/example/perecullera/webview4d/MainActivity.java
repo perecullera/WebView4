@@ -65,6 +65,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     NetworkUtil nt;
     private final NetworkChangeReceiver mybroadcast = new NetworkChangeReceiver();
 
+    private boolean isReceiverRegistered;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,10 +161,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 //        IntentFilter filter = new IntentFilter();
 //        filter.addAction("ConnectivityManager.CONNECTIVITY_ACTION");
 //        registerReceiver(mybroadcast, filter);
-        registerReceiver(
+/*       registerReceiver(
                 mybroadcast,
                 new IntentFilter(
-                        ConnectivityManager.CONNECTIVITY_ACTION));
+                        ConnectivityManager.CONNECTIVITY_ACTION));*/
 
     }
     //carrega preferències a les variables de la classe, si no en troba posa "" com a default
@@ -302,14 +304,28 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     @Override
     public void onPause(){
         super.onPause();
-        unregisterReceiver(mybroadcast);
+        if (isReceiverRegistered) {
+            try {
+                unregisterReceiver(mybroadcast);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            isReceiverRegistered = false;
+        }
+
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("ConnectivityManager.CONNECTIVITY_ACTION");
-        registerReceiver(mybroadcast, filter);
+
+        if (!isReceiverRegistered) {
+            registerReceiver(
+                    mybroadcast,
+                    new IntentFilter(
+                            ConnectivityManager.CONNECTIVITY_ACTION));
+            isReceiverRegistered = true;
+        }
     }
+
 }
