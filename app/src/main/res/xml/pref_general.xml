@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
+    <com.example.perecullera.webview4d.CustomEditTextPref
         android:title="@string/pref_server_label"
         android:key="@string/pref_server_key"
         android:defaultValue="@string/pref_server_default"
         android:inputType="text"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:background="@android:color/transparent"
+        />
 
-    <EditTextPreference
+    <com.example.perecullera.webview4d.CustomEditTextPref
         android:title="@string/pref_port_label"
         android:key="@string/pref_port_key"
         android:defaultValue="@string/pref_port_default"
         android:inputType="text"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:background="@android:color/transparent"
+        />
 
     <com.example.perecullera.webview4d.ServerPortDialog
         android:summary="@string/pref_portserver_summ"
         android:title="@string/pref_portserver_title"
         />
 
-    <ListPreference
+    <!--<ListPreference
         android:title="@string/pref_servers_title"
         android:key="@string/pref_servers_key"
         android:defaultValue="@string/pref_servers_default"
         android:entryValues="@array/pref_servers_values"
-        android:entries="@array/pref_servers_options" />
+        android:entries="@array/pref_servers_options" />-->
 
 </PreferenceScreen>

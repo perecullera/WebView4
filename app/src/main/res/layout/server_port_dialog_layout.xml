@@ -14,6 +14,7 @@
         android:singleLine="true"
         android:hint="Server"
         android:padding="25dp"
+
         />
 
     <EditText
@@ -27,6 +28,8 @@
         android:singleLine="true"
         android:hint="Port"
         android:padding="25dp"
+
+
         />
 
 </LinearLayout>

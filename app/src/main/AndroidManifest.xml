@@ -8,12 +8,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/leds_c4"
+        android:icon="@drawable/ledsc4_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".SettingsActivity"
-            android:label="SettingsActivity"
+            android:label="@string/action_settings"
             android:theme="@style/AppTheme">
         </activity>
         <activity

@@ -3,7 +3,53 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@android:color/darker_gray</item>
+
+        <item name="android:divider">#4000</item>
+        <item name="android:dividerHeight">2dip</item>
+        <item name="android:colorBackground">@color/light_grey</item>
+        <item name="android:windowBackground">@color/dark_grey</item>
+        <item name="android:actionBarStyle">@style/Custom_ActionBar</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/orange</item>
+        <item name="android:alertDialogStyle">@style/AlertDialogCustom</item>
+        <item name="android:editTextBackground">@android:color/transparent</item>
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+
     </style>
+    <!--Action Bar-->
+    <style name="Custom_ActionBar" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/dark_grey</item>
+        <item name="android:titleTextStyle">@style/Custom_ActionBar.TextView</item>
+    </style>
+
+    <style name="Custom_ActionBar.TextView" parent="@android:style/TextAppearance.Large"></style>
+
+    <!-- Custom Alert Dialog -->
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:background">@color/dark_grey</item>
+        <item name="android:actionBarDivider">@color/dark_grey</item>
+        <item name="android:windowTitleBackgroundStyle">@android:color/transparent</item>
+        <item name="android:windowTitleStyle">@style/AlertDialogCustom.Title</item>
+
+    </style>
+
+    <style name="AlertDialogCustom.Title" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="WindowTitleBackground">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!-- colors -->
+    <color name="dark_grey">#707171</color>
+    <color name="light_grey">#484849</color>
+    <color name="white">#aeaeaf</color>
+    <color name="orange">#ffff7f16</color>
+    <color name="blue">#ff4de2ff</color>
 
 </resources>

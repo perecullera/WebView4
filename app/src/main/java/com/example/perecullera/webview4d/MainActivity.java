@@ -72,8 +72,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         //instantiate variables
         settings = getString(R.string.drawer_settings);
         refresh = getString(R.string.drawer_refresh);
-        exit =getString(R.string.drawer_exit);
-        values = new String[]{settings, refresh, exit};
+//        exit =getString(R.string.drawer_exit);
+        values = new String[]{settings, refresh};
 
         pdmessage = getString(R.string.progreesdiag_mess);
 
@@ -215,12 +215,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     public void carregaWeb(){
-
-        //debug
-        System.out.println("preferencias "+ sPref.toString());
-        System.out.println("server "+ server);
-        System.out.println("port "+ port);
-        //Toast.makeText(this, "preferencias" + sPref.toString(), Toast.LENGTH_SHORT).show();
+        if (fullurl == null){
+            Intent settingsInt = new Intent(this, SettingsActivity.class);
+            settingsInt.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+            startActivity(settingsInt);
+        }
 
         fullurl = valueOf(Uri.parse(fullurl));
         if (checkConnectivity()!= 0) {
@@ -229,7 +228,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 //Toast.makeText(this, "obrint webview amb url: " + fullurl, Toast.LENGTH_SHORT).show();
             }
         } else {
-            nt.showNoConnectionDialog(this  );
+            nt.showNoConnectionDialog(this);
         }
     }
 
@@ -249,15 +248,16 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             }
             else {
                 Log.i("returning false  : "+ response , url);
-                goToPref(String.valueOf(response));
+                //TODO
+                goToPref(messServer1);
                 return false;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-            goToPref(String.valueOf(e));
+            goToPref(messServer1);
         } catch (ExecutionException e) {
             e.printStackTrace();
-            goToPref(String.valueOf(e));
+            goToPref(messServer1);
         }
         goToPref(messServer2);
         return false;

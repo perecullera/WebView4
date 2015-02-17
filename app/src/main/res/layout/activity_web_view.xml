@@ -13,12 +13,12 @@
         android:layout_height="wrap_content" />
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
-        android:layout_width="160dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="#f6e6e6e6"
-        android:dividerHeight="1dp"
+        android:dividerHeight="3dp"
         android:background="#50000000"/>
 
 </android.support.v4.widget.DrawerLayout>

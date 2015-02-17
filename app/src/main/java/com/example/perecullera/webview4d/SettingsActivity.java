@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 
 public class SettingsActivity extends PreferenceActivity {
@@ -25,6 +27,8 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
         //getInit();
+        ImageView logo = (ImageView) findViewById(android.R.id.home);
+        logo.setVisibility(View.INVISIBLE);
 
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {/*
@@ -43,7 +47,7 @@ public class SettingsActivity extends PreferenceActivity {
         if (message != null) {
             System.out.println(message);
             CustomDialogClass cdd = new CustomDialogClass(this, message);
-            cdd.show();
+            cdd.show(getFragmentManager(), message);
         }
     }
 
