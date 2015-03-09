@@ -42,6 +42,10 @@
     <string name="cancel">Cancel</string>
     <string name="accept_button">yes</string>
     <string name="ok">ok</string>
+    
+    <!--networkchangereceiver values -->
+    <string name="activeNetStr">Active Network Type : </string>
+    <string name="mobNetStr">Mobile Network Type : </string>
 
 
 </resources>

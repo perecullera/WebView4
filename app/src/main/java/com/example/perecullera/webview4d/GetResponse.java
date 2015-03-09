@@ -84,6 +84,10 @@ public class GetResponse extends AsyncTask<String, Integer, Integer> {
             //TODO
             System.out.println(e);
         }
+        //close hhttpurlconnection to fix buf of recicling closed socket
+        finally {
+            conexion.disconnect();
+        }
         return respons;
     }
 
@@ -91,52 +95,4 @@ public class GetResponse extends AsyncTask<String, Integer, Integer> {
     protected void onPostExecute(Integer result) {
         dialog.dismiss();
     }
-
-/*
-    public boolean is404(String string) {
-        boolean bo;
-
-        try {
-
-            url = new URL(string);
-            conexion = (HttpURLConnection) url.openConnection();
-            conexion.setConnectTimeout(3000);
-            Log.i("connection", "opened");
-            conexion.connect();
-            conexion.setRequestMethod("HEAD");
-            int respons = conexion.getResponseCode();
-            Log.i("connection", "getresponse code");
-            bo = (respons == HttpURLConnection.HTTP_OK);
-            if (bo) {
-                return true;
-
-            } else {
-
-                Log.i("MyActivity", "Error :" + respons);
-                return false;
-
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            //TODO
-        } catch (IOException e) {
-            e.printStackTrace();
-            //TODO
-        }
-        return false;
-    }
-*/
 }
-   /* //carrega un html d'error guardat a els arxius de l'app
-    private void carregaHtml() {
-        //TODO
-        webview.loadUrl("file:///android_asset/error.html");
-
-    }
-
-    public void carregaWeb(){
-
-        fullurl = valueOf(Uri.parse(fullurl));
-        webview.loadUrl(fullurl);
-    }
-}*/

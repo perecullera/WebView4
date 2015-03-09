@@ -22,7 +22,7 @@ android {
         }
         release_alpha_17_2_Network {
             minSdkVersion 14
-            applicationId 'release_alpha_17_2_Network'
+            applicationId 'com.example.perecullera.webview4d'
             targetSdkVersion 19
             versionName '1'
         }

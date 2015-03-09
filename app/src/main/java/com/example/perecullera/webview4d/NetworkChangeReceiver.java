@@ -20,11 +20,13 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
         NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE );
         if ( activeNetInfo != null )
         {
-            Toast.makeText( context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
+            String msg = context.getString(R.string.activeNetStr);
+            Toast.makeText( context, msg + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
         }
         if( mobNetInfo != null )
         {
-            Toast.makeText( context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
+            String msg = context.getString(R.string.mobNetStr);
+            Toast.makeText( context, msg + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
         }if (activeNetInfo == null){
             NetworkUtil nt = new NetworkUtil();
             nt.showNoConnectionDialog(context);

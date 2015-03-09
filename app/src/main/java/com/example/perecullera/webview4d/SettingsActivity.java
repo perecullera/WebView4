@@ -51,13 +51,7 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    private void sharedPreferences() {
 
-        toEdit = sh_Pref.edit();
-        toEdit.putString("server", server);
-        toEdit.putString("port", port);
-        toEdit.commit();
-    }
 
 
 }

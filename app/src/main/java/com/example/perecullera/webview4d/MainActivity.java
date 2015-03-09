@@ -158,14 +158,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         };
         sPref.registerOnSharedPreferenceChangeListener(listener);
 
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction("ConnectivityManager.CONNECTIVITY_ACTION");
-//        registerReceiver(mybroadcast, filter);
-/*       registerReceiver(
-                mybroadcast,
-                new IntentFilter(
-                        ConnectivityManager.CONNECTIVITY_ACTION));*/
-
     }
     //carrega preferències a les variables de la classe, si no en troba posa "" com a default
     public void loadSerPort() {
