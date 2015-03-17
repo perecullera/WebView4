@@ -69,7 +69,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        this.getWindow().getDecorView().setSystemUiVisibility(getSystemUiFlags());
+        //carrega layout
+        setContentView(R.layout.activity_web_view);
+
+
 
         //instantiate variables
         settings = getString(R.string.drawer_settings);
@@ -88,13 +94,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         pd =  ProgressDialog.show(this, "", pdmessage, true);
         pd.setCancelable(true);
 
-        //carrega layout
-        setContentView(R.layout.activity_web_view);
 
         // amaga actionBar
-        getSupportActionBar().hide();
+       // getSupportActionBar().hide();
 
         nt = new NetworkUtil();
+
+        //amaga navigationBar
+        UiChangeListener();
 
 
         //webview
@@ -321,6 +328,37 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                             ConnectivityManager.CONNECTIVITY_ACTION));
             isReceiverRegistered = true;
         }
+        this.getWindow().getDecorView().setSystemUiVisibility(getSystemUiFlags());
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        this.getWindow().getDecorView().setSystemUiVisibility(getSystemUiFlags());
+    }
+    public void UiChangeListener()
+    {
+        final View decorView = this.getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    decorView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                }
+            }
+        });
+    }
+    private static int getSystemUiFlags() {
+        return View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
     }
 
 }
