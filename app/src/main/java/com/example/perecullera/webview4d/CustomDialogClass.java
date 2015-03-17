@@ -1,5 +1,6 @@
 package com.example.perecullera.webview4d;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,6 +22,11 @@ public class CustomDialogClass extends DialogFragment implements View.OnClickLis
     public String message;
     public TextView txtMessage;
 
+    public CustomDialogClass() {
+        super();
+    }
+
+    @SuppressLint("ValidFragment")
     public CustomDialogClass(Activity a, String msg) {
         super();
         // TODO Auto-generated constructor stub

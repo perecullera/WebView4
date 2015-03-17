@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ledsc4_logo"
+        android:icon="@drawable/logo_c4_alpha"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="Emotional"
+            android:label="Emotional CTRL"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

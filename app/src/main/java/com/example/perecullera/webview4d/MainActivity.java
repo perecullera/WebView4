@@ -16,7 +16,7 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -111,15 +111,18 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 }
             }
         });
-        webView.setWebChromeClient(new WebChromeClient(){
+        /*webView.setWebChromeClient(new WebChromeClient(){
                 @Override
                 public void onProgressChanged(WebView view, int progress) {
                 // Activities and WebViews measure progress with different scales.
                 // The progress meter will automatically disappear when we reach 100%
                 pd.setProgress(progress * 1000);
                 }
-        });
-        webView.getSettings().setJavaScriptEnabled(true);
+        });*/
+        WebSettings settings = webView.getSettings();
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setJavaScriptEnabled(true);
 
         //drawer
         mDrawerOptions = (ListView) findViewById(R.id.left_drawer);
