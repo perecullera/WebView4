@@ -10,7 +10,7 @@
     <string name="title_activity_web_view">WebViewActivity</string>
 
     <!--Preferences labels and keys international -->
-    <string name="pref_server_default">localhost</string>
+    <string name="pref_server_default">127.0.0.1</string>
     <string name="pref_server_label">Servidor</string>
     <string name="pref_port_default"></string>
     <string name="pref_port_label">Port</string>
