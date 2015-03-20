@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="Emotional CTRL"
+            android:label="Emotional"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
