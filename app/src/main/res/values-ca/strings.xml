@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Emotional CTRL</string>
+    <string name="app_name">Emotional</string>
 
     <!--Settings activity title -->
     <string name="action_settings">Preferències</string>

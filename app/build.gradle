@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "20.0.0"
     defaultConfig {
         applicationId "com.example.perecullera.webview4d"
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -25,6 +25,13 @@ android {
             applicationId 'com.example.perecullera.webview4d'
             targetSdkVersion 19
             versionName '1'
+        }
+        beta2 {
+            minSdkVersion 18
+            applicationId 'com.example.perecullera.webview4d'
+            targetSdkVersion 19
+            versionCode 1
+            versionName '1.0'
         }
     }
 }
