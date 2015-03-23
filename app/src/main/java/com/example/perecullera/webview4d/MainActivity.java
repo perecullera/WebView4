@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
 
         // amaga actionBar
-       // getSupportActionBar().hide();
+       getSupportActionBar().hide();
 
         nt = new NetworkUtil();
 

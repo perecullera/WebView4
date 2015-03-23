@@ -34,8 +34,8 @@
 
     <!-- HTML messages -->
     <string name="messages_invalid"> URL no vàlida</string>
-    <string name="message_server1">No és possible connectar con el servidor código 1</string>
-    <string name="message_server2">No és possible connectar con el servidor código 2</string>
+    <string name="message_server1">No és possible connectar con el servidor </string>
+    <string name="message_server2">No és possible connectar con el servidor</string>
     <string name="no_connection">Please check Network Settings</string>
     <string name="no_connection_title">No Network Connection</string>
     <string name="settings">Settings</string>
